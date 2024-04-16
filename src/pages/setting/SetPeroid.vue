@@ -157,6 +157,7 @@
                     <option>未开始</option>
                     <option>进行中</option>
                     <option>已达成</option>
+                    <option>暂停</option>
                   </select>
                 </div>
               </div>

@@ -43,17 +43,16 @@
     </form>
     <hr />
     <div class="row" style="height: 350px">
-      <LineChart ref="myDayGetInAys"></LineChart>
+
     </div>
     <div class="row" style="height: 350px">
-      <BarChart ref="myBarWeek"></BarChart>
+
     </div>
   </div>
 </template>
 
 <script>
-import LineChart from "./LineChart.vue";
-import BarChart from "./BarChart.vue";
+
 import _ from "underscore";
 import axios from "axios";
 import dayjs from "dayjs";
@@ -61,9 +60,7 @@ import dayjs from "dayjs";
 export default {
   data() {
     return {
-      // name:"小草微醉",
-      // xData:['2020-02','2020-03','2020-04','2020-05'],
-      // yData:[30,123,50,134]
+
       data: "",
       targets:[],
       selectedTarget:{}
@@ -133,37 +130,12 @@ export default {
       me.search();
     },
     setData(data) {
-      let xData = _.pluck(data, "record_time");
-      xData = _.map(xData, function (item) {
-        return dayjs(item).format("YYYY-MM-DD");
-      });
-      let yData = _.pluck(data, "amount");
-      this.$refs.myDayGetInAys.initChart("每日收入分析", xData, yData);
 
-      let barData = [];
-      let xBarData = [];
-      let yBarData = [];
-      _.each(data, function (item) {
-        var weekItem = _.find(barData, function (x) {
-          return x.week == item.week;
-        });
-        if (weekItem != undefined) {
-          weekItem.day_amount += item.day_amount;
-        } else {
-          barData.push(item);
-        }
-      });
-
-      xBarData = _.pluck(barData, "weekRange");
-      yBarData = _.pluck(barData, "day_amount");
-      // console.log(barData);
-
-      this.$refs.myBarWeek.initChart("每周收入分析", xBarData, yBarData);
     },
     search(startDate, endDate) {
       startDate = startDate || $("#inputStartDate").val();
       endDate = endDate || $("#inputEndDate").val();
-      let url = `/record/search?startDate=${startDate}&endDate=${endDate}`;
+      let url = `/liferecord/search?startDate=${startDate}&endDate=${endDate}`;
       axios.get(url).then((res) => {
         if (res.data.msg == "success" && res.data.data != undefined) {
           //设置图表的数据源
@@ -174,8 +146,7 @@ export default {
     clear() {},
   },
   components: {
-    LineChart,
-    BarChart,
+
   },
 };
 </script>

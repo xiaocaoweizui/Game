@@ -19,12 +19,14 @@
 
 <script>
 import game from "./game/DayGetInAnalysis.vue";
-import life from "./life/DayGetInAnalysis.vue";
+import life from "./life/DayCalendar.vue";
+import work from "./work/WeekLogs.vue";
 import NotFound from "./NotFound.vue";
 
 const routes = {
   'game': game,
   'life': life,
+  'work':work
 };
 
 export default {

@@ -4,6 +4,7 @@
     <li class="active">用户编辑</li>
   </ol>
   <form class="form-horizontal">
+    <input type="hidden" :value="data.id">
     <div class="form-group">
       <label for="inputLogo" class="col-sm-2 control-label">头像</label>
       <div class="col-sm-4">
@@ -30,7 +31,7 @@
     </div>
     <div class="form-group">
       <div class="col-sm-offset-2 col-sm-10">
-        <button type="submit" class="btn btn-default">Save</button>  <button type="submit" class="btn btn-default">back</button>
+        <button type="button" class="btn btn-default" @click="save()">Save</button>  <button type="button" class="btn btn-default">back</button>
       </div>
     </div>
   </form>
@@ -60,6 +61,18 @@ export default {
     },
     getImgPath(url){
       return new URL(url,import.meta.url).href;
+    },
+    save(){
+      var me=this;
+      me.data.name=$("#inputName").val();
+      me.data.remark=$("#inputRemark").val();
+      me.data.sex=$("#inputSex").val();
+      console.log(me.data);
+      axios.post("/person/save",me.data).then((res)=>{
+        if(res.data.msg=="success"){
+          alert("保存成功");
+        }
+      })
     }
   },
 };

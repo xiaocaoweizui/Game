@@ -5,7 +5,8 @@ module.exports = defineConfig({
   productionSourceMap:false,
   lintOnSave:false,
   devServer:{
-    proxy: 'http://localhost:3000'
+    proxy: 'http://localhost:3000',
+    port:3001
   }
 })
 

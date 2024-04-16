@@ -19,12 +19,14 @@
 
 <script>
 import gameDayGetIn from "./game/DayGetIn.vue";
-import lifeDayGetIn from "./life/DayGetIn.vue";
+import lifeDayGetIn from "./life/DayRecord.vue";
+import work from "./work/Day.vue";
 import NotFound from "./NotFound.vue";
 
 const routes = {
   'life': lifeDayGetIn,
-  'game': gameDayGetIn
+  'game': gameDayGetIn,
+  'work':work
 };
 
 export default {

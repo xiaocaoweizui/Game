@@ -55,7 +55,7 @@
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
-          <h4 class="modal-title" id="myModalLabel">每日进展情况</h4>
+          <h4 class="modal-title" id="myModalLabel">每日情况</h4>
         </div>
         <div class="modal-body">
           <form class="form-horizontal">
@@ -66,7 +66,7 @@
                     type="text"
                     class="form-control"
                     id="title"
-                    placeholder="0"
+                    placeholder="主题"
                   />
               </div>
             </div>
@@ -91,7 +91,7 @@
                 <!-- <p class="form-control-static">{{ now()}}</P> -->
               </div>
             </div>
-            <div class="form-group">
+            <div class="form-group" style="display: none">
               <label for="cur_amount" class="col-sm-2 control-label">总进度</label>
               <div class="col-sm-10">
                 <div class="input-group">
@@ -106,7 +106,7 @@
                 </div>
               </div>
             </div>
-            <div class="form-group">
+            <div class="form-group"  style="display: none">
               <label for="day_amount" class="col-sm-2 control-label">当天进展</label>
               <div class="col-sm-10">
                 <div class="input-group">
@@ -123,7 +123,7 @@
             <div class="form-group">
               <label for="remark" class="col-sm-2 control-label">备注</label>
               <div class="col-sm-10">
-                <textarea class="form-control" rows="3" id="remark"></textarea>
+                <textarea class="form-control" rows="5" id="remark"></textarea>
               </div>
             </div>
           </form>
@@ -162,7 +162,6 @@
           <th>标题</th>
           <th>人员</th>
           <th>时间</th>
-          <th>总进展</th>
           <th>备注</th>
           <th>操作</th>
         </tr>
@@ -173,7 +172,6 @@
           <td>{{ item.title }}</td>
           <td>{{ item.person_name }}</td>
           <td>{{ formatTime(item.record_time) }}</td>
-          <td style="text-align: right">{{ item.cur_amount }}</td>
           <td>{{ item.remark }}</td>
           <td>
             <a href="javascript:void(0)" @click="mod(item.id)">详情</a>
@@ -199,8 +197,8 @@
   height: 40px;
 }
 .page_div {
-  padding: 0px;
-  margin: 0px;
+  padding: 0;
+  margin: 0;
   text-align: right;
 }
 </style>

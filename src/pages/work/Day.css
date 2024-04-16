@@ -1,0 +1,68 @@
+#table_calender thead {
+    height: 30px;
+    line-height: 30px;
+    text-align: center;
+}
+
+#table_calender tr {
+    height: 140px;
+    line-height: 120px;
+}
+
+#table_calender td {
+    width: 14%;
+}
+
+.table_calender_tr {
+
+}
+
+.input_todo {
+    border-width: 0;
+    width: 100%;
+    padding-left: 3px;
+}
+
+.div_todo {
+    position: relative;
+}
+
+.span_todo_new {
+    position: absolute;
+    top: 0px;
+    right: 20px;
+    font-size: 12px;
+    cursor: pointer;
+    display: none;
+}
+
+.span_todo_save {
+    position: absolute;
+    top: 0px;
+    right: 3px;
+    font-size: 12px;
+    cursor: pointer;
+    display: none;
+}
+
+.span_todo_del {
+    position: absolute;
+    right: 3px;
+    display: none;
+    cursor: pointer;
+}
+
+.today {
+    background-color: #eee;
+}
+.div_select{
+    position: relative;
+}
+.div_select_tip{
+    position: absolute;
+    right: 25px;
+    top:10px;
+}
+.div_select_tip span{
+    cursor: pointer;
+}
