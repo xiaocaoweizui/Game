@@ -1,6 +1,6 @@
 <template>
     <div id="div_week_log" >
-      <h3 class="text-center">张毅工作周志(2024-04-15~2024-04-22)</h3>
+      <h3 class="text-center">张毅工作周志({{ data.weekRange }})</h3>
       <br>
       <table class="table table-bordered"  >
         <tbody>
@@ -29,7 +29,7 @@
           <td class="active" width="20%">完成情况</td>
         </tr>
         <tr  v-for="weekWork in data.weekWorks">
-          <td>{{ weekWork.date }}（{{ weekWork.weekDay }}）</td>
+          <td class="text-center">{{ weekWork.date }}（{{ weekWork.weekDay }}）</td>
           <td colspan="2">
             <ol>
               <li v-for="work in weekWork.works">{{ work }}</li>
@@ -52,43 +52,20 @@
       </table>
     </div>
 </template>
-<style>
-#div_week_log ol{
-  margin: 0;
-}
+<style scoped>
+@import "MyWeekLog.css";
 </style>
 <script>
 
+import dayjs from "dayjs";
 export default {
   data() {
     return {
       data:{
+        weekRange:"",
         monthWorks:["11111","22222"],
         quarterWorks:["11111","22222"],
-        weekWorks:[{
-          date:"2021-01-01",
-          weekDay:"周一",
-          works:["11111","22222"],
-          status:"已完成"
-        },
-          {
-            date:"2021-01-02",
-            weekDay:"周二",
-            works:["11111","22222"],
-            status:"已完成"
-          },
-          {
-            date:"2021-01-03",
-            weekDay:"周三",
-            works:["11111","22222"],
-            status:"已完成"
-          },
-          {
-            date:"2021-01-04",
-            weekDay:"周四",
-            works:["11111","22222"],
-            status:"已完成"
-          }],
+        weekWorks:[],
         Summarize:[
             {
               title:"ttttttt",
@@ -103,7 +80,20 @@ export default {
     
   },
   methods: {
-
+    init:function (weekRange){
+      var monday=weekRange.split('~')[0];
+      var me=this;
+      me.data.weekRange=weekRange;
+      for(var i=0;i<7;i++){
+        var date=dayjs(monday).add(i, 'day').format('YYYY-MM-DD');
+        me.data.weekWorks.push({
+          date:date,
+          weekDay:dayjs(date).format('ddd'),
+          works:[],
+          status:"未完成"
+        });
+      }
+    }
   },
 };
 </script>
