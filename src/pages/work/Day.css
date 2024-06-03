@@ -66,3 +66,19 @@
 .div_select_tip span{
     cursor: pointer;
 }
+.tip-holiday{
+    position: absolute;
+    right: 5px;
+    background-color: #ac2925;
+    width: 18px;
+    color: white;
+    text-align: center;
+}
+.tip-workday{
+    position: absolute;
+    right: 5px;
+    background-color: #2aabd2;
+    width: 18px;
+    color: white;
+    text-align: center;
+}

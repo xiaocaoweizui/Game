@@ -56,7 +56,7 @@
           <th>#</th>
           <th style="text-align: center">分类</th>
           <th style="text-align: center">目标</th>
-          <th style="text-align: center">总金额</th>
+          <th style="text-align: center">目标总额</th>
           <th style="text-align: center">开始时间</th>
           <th style="text-align: center">结束时间</th>
           <th style="text-align: center">完成状态</th>
@@ -137,7 +137,7 @@
             </div>
 
             <div class="form-group">
-              <label for="total_coin" class="col-sm-2 control-label">总金额</label>
+              <label for="total_coin" class="col-sm-2 control-label">目标总额</label>
               <div class="col-sm-3">
                 <div class="input-group">
                   <input
@@ -146,7 +146,7 @@
                     id="total_coin"
                     placeholder="0"
                   />
-                  <div class="input-group-addon">万</div>
+
                 </div>
               </div>
 
@@ -160,6 +160,17 @@
                     <option>暂停</option>
                   </select>
                 </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="input_unit" class="col-sm-2 control-label">单位 </label>
+              <div class="col-sm-3">
+                <input
+                    type="text"
+                    class="form-control"
+                    id="input_unit"
+                    placeholder="单位"
+                />
               </div>
             </div>
             <div class="form-group">
@@ -268,6 +279,7 @@ export default {
       $("#id").val("");
       $("#status").val("未开始");
       $("#myModal").modal("show");
+      $("#input_unit").val("万");
     },
     save() {
       //保存攒金目标
@@ -279,6 +291,7 @@ export default {
       let status = $("#status").val();
       let id = $("#id").val();
       let type = $("input[name='radio_type']:checked").val();
+      let unit = $("#input_unit").val();
 
       let url = `/target/insert`;
       if (id != "") {
@@ -294,6 +307,7 @@ export default {
         amount: amount,
         status: status,
         type: type,
+        unit:unit
       };
       axios.post(url, data).then((res) => {
         if (res.data.msg == "success") {
@@ -356,6 +370,7 @@ export default {
           $("#id").val(res.data.data.id);
           $("#status").val(res.data.data.status);
           $("#total_coin").val(res.data.data.amount);
+          $("#input_unit").val(res.data.data.unit);
           $("input[name='radio_type'][value='" + res.data.data.type + "']").prop(
             "checked",
             true

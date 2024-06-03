@@ -24,6 +24,16 @@
       </div>
     </div>
     <div class="form-group">
+      <label for="inputUserCode" class="col-sm-2 control-label">账号</label>
+      <div class="col-sm-4">
+        <input type="text" class="form-control" id="inputUserCode" placeholder="" :value="data.code" />
+      </div>
+      <label for="inputPassword" class="col-sm-2 control-label">密码</label>
+      <div class="col-sm-4">
+        <input type="password" class="form-control" id="inputPassword" placeholder="" :value="data.password" />
+      </div>
+    </div>
+    <div class="form-group">
       <label for="inputRemark" class="col-sm-2 control-label">备注</label>
       <div class="col-sm-10">
         <textarea  row="5" type="text"  class="form-control"  id="inputRemark" placeholder="备注" :value="data.remark"   />
@@ -67,7 +77,9 @@ export default {
       me.data.name=$("#inputName").val();
       me.data.remark=$("#inputRemark").val();
       me.data.sex=$("#inputSex").val();
-      console.log(me.data);
+      me.data.password=$("#inputPassword").val();
+      me.data.code=$("#inputUserCode").val();
+
       axios.post("/person/save",me.data).then((res)=>{
         if(res.data.msg=="success"){
           alert("保存成功");

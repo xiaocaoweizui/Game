@@ -1,5 +1,5 @@
 <template>
-    <div id="echart-bar" ref="echart-bar" style="width:100%;height:100%">
+    <div id="echart-line" ref="echart-line" style="width:100%;height:100%">
     
     
     
@@ -19,10 +19,10 @@ export default {
 
     methods: {
         initChart(name, xData, yData) {
-            let getchart = echarts.init($("#echart-bar")[0]);
+            let getchart = echarts.init($("#echart-line")[0]);
             var options = {
               title:{
-                text:"每周收入金币",
+                text:name,
                 left:"center"
               },
                 tooltip: {
@@ -37,23 +37,24 @@ export default {
                 },
                 xAxis: {
                     type: 'category',
+                    boundaryGap: false,
                     data: xData
                 },
                 yAxis: {
                     type: 'value',
-                    name :"总金币（万）",
+                    name :"总进展",
                     axisLabel: {
-                      formatter: '{value} w'
+                      formatter: '{value} '
                     }
                 },
                 series: [{
-                    name: "总金币",
-                    type: 'bar',
-                    barWidth: '30%',
+                    name: "总进展",
+                    type: 'line',
+                    stack: '',
                     data: yData,
                     label:{
                       show:true,
-                      formatter: '{c} W'
+                      formatter: '{c} '
                     }
                 }]
             };

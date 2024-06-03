@@ -93,12 +93,12 @@
                     placeholder="0"
                     @change="change()"
                   />
-                  <div class="input-group-addon">万</div>
+                  <div class="input-group-addon">{{ selectedTarget.unit }}</div>
                 </div>
               </div>
             </div>
             <div class="form-group">
-              <label for="day_coin" class="col-sm-2 control-label">当天收入</label>
+              <label for="day_coin" class="col-sm-2 control-label">当天进展</label>
               <div class="col-sm-10">
                 <div class="input-group">
                   <input
@@ -107,7 +107,7 @@
                     id="day_coin"
                     placeholder="0"
                   />
-                  <div class="input-group-addon">万</div>
+                  <div class="input-group-addon">{{ selectedTarget.unit }}</div>
                 </div>
               </div>
             </div>
@@ -153,7 +153,7 @@
           <th>角色id</th>
           <th>时间</th>
           <th>星期</th>
-          <th>总金币（万）</th>
+          <th>目标总额</th>
           <th>备注</th>
           <th>操作</th>
         </tr>

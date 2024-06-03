@@ -34,8 +34,11 @@
         <td v-for="day in item">
           <div v-if="day!=null" class="div_todo" v-bind:id="'div_day_'+day.date" v-bind:date="day.date">
             <span>{{ day.date }}</span>
+            <span v-if="day.isHoliday&& !day.isWeekend" class="tip-holiday">休</span>
+            <span v-if="!day.isHoliday&& day.isWeekend" class="tip-workday">班</span>
             <span class="span_todo_new" @click="newTodo($event)">➕</span>
             <span class="span_todo_save" @click="save($event)">✔️</span>
+
           </div>
         </td>
       </tr>
@@ -55,7 +58,7 @@ import _ from "underscore";
 import axios from "axios";
 import dayjs from "dayjs";
 import moment from "dayjs";
-
+import ww  from "chinese-workday";
 
 export default {
   data() {
@@ -95,24 +98,27 @@ export default {
     $("#inputPickDate").val(nowMonth);
     me.init(nowMonth);
   },
+  updated() {
+    //设置今天的背景
+    var date = dayjs().date();
+    var curMonth=dayjs().get("month")+1;
+    var nowMonth= $("#inputPickDate").val();
+    var month = dayjs(nowMonth).month() + 1;
+
+    $("td.today").removeClass("today");
+
+    if(curMonth==month){
+      $("#div_day_" + date).parent("td").addClass("today");
+    }
+  },
   methods: {
     init: function (nowMonth) {
       var me = this;
       //重新计算日历
       me.days =me.buildCalc(nowMonth);
-
-      //设置今天的背景
-      var date = dayjs().date();
-      var curMonth=dayjs().get("month")+1;
       var month = dayjs(nowMonth).month() + 1;
       var year = dayjs(nowMonth).year();
-
-      $("td.today").removeClass("today");
-      if(curMonth==month){
-        $("#div_day_" + date).parent("td").addClass("today");
-      }
       //获取数据
-
       axios.get("/worktodo/query?month=" + month + "&year=" + year).then(res => {
           //清空所有代办：
         $("div.checkbox").remove();
@@ -136,9 +142,12 @@ export default {
     buildCalc(month) {
       var firstDay = month + "-01";
       var daysInMonth = dayjs(firstDay).daysInMonth();
+      //当天是星期几
       var week = dayjs(firstDay).day();
+
       var count = 1;
       var ret = [[], [], [], [], []];
+      let isHoliday=false;
       for (var i = 0; i < ret.length; i++) {
         //首行
         if (i === 0) {
@@ -146,7 +155,8 @@ export default {
             if (j < week) {
               ret[i][j] = null;
             } else {
-              ret[i][j] = {date: count++, week: j};
+              isHoliday= ww.isHoliday(month +'-'+ count.toString()) ;
+              ret[i][j] = {date: count++, week: j, isHoliday:isHoliday,isWeekend: j==0||j==6};
             }
           }
         } else {
@@ -154,7 +164,8 @@ export default {
             if (count > daysInMonth) {
               ret[i][n] = null;
             } else {
-              ret[i][n] = {date: count++, week: j};
+              isHoliday= ww.isHoliday(month +'-'+ count.toString()) ;
+              ret[i][n] = {date: count++, week: j, isHoliday:isHoliday,isWeekend: n==0||n==6};
             }
           }
         }

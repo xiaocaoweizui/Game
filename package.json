@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "axios": "^1.6.2",
+    "chinese-workday": "^1.10.0",
     "core-js": "^3.8.3",
     "dayjs": "^1.11.10",
     "echarts": "^4.5.0",

@@ -2,7 +2,7 @@
   <div class="container-fluid" >
     <form class="form-horizontal">
       <div class="form-group">
-        <label for="inputTarget" class="col-sm-2 control-label">攒金目标</label>
+        <label for="inputTarget" class="col-sm-2 control-label">目标</label>
         <div class="col-sm-3">
           <div class="input-group">
           <select class="form-control" id="select_target" @change="changeTarget($event)">
@@ -43,17 +43,17 @@
     </form>
     <hr />
     <div class="row" style="height: 350px">
-      <LineChart ref="myDayGetInAys"></LineChart>
+      <DayChart ref="myDayGetInAys"></DayChart>
     </div>
     <div class="row" style="height: 350px">
-      <BarChart ref="myBarWeek"></BarChart>
+      <WeekChart ref="myBarWeek"></WeekChart>
     </div>
   </div>
 </template>
 
 <script>
-import LineChart from "./LineChart.vue";
-import BarChart from "./BarChart.vue";
+import DayChart from "./DayChart.vue";
+import WeekChart from "./WeekChart.vue";
 import _ from "underscore";
 import axios from "axios";
 import dayjs from "dayjs";
@@ -138,7 +138,8 @@ export default {
         return dayjs(item).format("YYYY-MM-DD");
       });
       let yData = _.pluck(data, "amount");
-      this.$refs.myDayGetInAys.initChart("每日收入分析", xData, yData);
+      let weekName ="每日进展("+ this.selectedTarget.unit+")";
+      this.$refs.myDayGetInAys.initChart(weekName, xData, yData);
 
       let barData = [];
       let xBarData = [];
@@ -156,9 +157,9 @@ export default {
 
       xBarData = _.pluck(barData, "weekRange");
       yBarData = _.pluck(barData, "day_amount");
-      // console.log(barData);
 
-      this.$refs.myBarWeek.initChart("每周收入分析", xBarData, yBarData);
+      let name ="每周进展("+  this.selectedTarget.unit+")";
+      this.$refs.myBarWeek.initChart(name, xBarData, yBarData);
     },
     search(startDate, endDate) {
       startDate = startDate || $("#inputStartDate").val();
@@ -174,8 +175,8 @@ export default {
     clear() {},
   },
   components: {
-    LineChart,
-    BarChart,
+    DayChart,
+    WeekChart,
   },
 };
 </script>
