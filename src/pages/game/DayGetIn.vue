@@ -285,6 +285,9 @@ export default {
             return null;
           }
           var target = _.findWhere(me.targets, { status: "进行中" });
+          if (target == null) {
+            target = me.targets[0];
+          }
           me.selectedTarget=target;
 
           var startDate=me.formatDate(target.start_time);
@@ -297,8 +300,11 @@ export default {
         });
     },
     getPageData(pageNum) {
+      var startDate =$("#inputStartDate").val();
+      var endDate= $("#inputEndDate").val();
+      let url = `/record/search?isDesc=1&startDate=${startDate}&endDate=${endDate}&&page=${pageNum}`;
       axios
-        .get(`/record/queryAll?isDesc=1&page=${pageNum}&t=${Math.random()}`)
+        .get(url)
         .then((res) => {
           this.data = res.data.data;
         })

@@ -36,6 +36,9 @@
       <div class="col-sm-3">
         <a @click='openUrl("waterflow")'>3、技术图</a>
       </div>
+      <div class="col-sm-3">
+        <a @click='openDemo("spreadJs")'>4、SpreadJsDemo</a>
+      </div>
     </div>
   </div>
 
@@ -53,6 +56,7 @@ const  urls={
   hzlc:"/html/Hzlc.html",
   kcReport:"/html/KcReport.html",
   waterflow:"/html/WaterFlow.html",
+  spreadJs:"/mySpreadJs"
 }
 export default {
   name: 'Home',
@@ -64,6 +68,10 @@ export default {
   methods:{
     openUrl(url){
       let redirectURL=Config.WORKS_SITE + urls[url];
+      window.open(redirectURL);
+    },
+    openDemo(url){
+      let redirectURL=window.location.origin+"/demo#" + urls[url];
       window.open(redirectURL);
     }
   }

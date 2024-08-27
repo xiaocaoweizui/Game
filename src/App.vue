@@ -7,6 +7,7 @@ import Day from './pages/Day.vue'
 import Account from './pages/Account.vue'
 import Analysis from './pages/Analysis.vue'
 import Setting from './pages/Setting.vue'
+import MyAi from './pages/AI.vue'
 
 const routes = {
   '/': Home,
@@ -15,6 +16,7 @@ const routes = {
   '/analysis':Analysis,
   '/account':Account,
   '/setting':Setting,
+  '/ai':MyAi,
 }
 
 const currentPath = ref(window.location.hash)
@@ -58,6 +60,7 @@ const currentView = computed(() => {
             <!-- <li> <a href="#/test">测试</a> </li> -->
             <li><a href="#/account">账户</a> </li>
             <li><a href="#/setting">设置</a> </li>
+            <li><a href="#/ai">我的AI</a> </li>
             <li> <a href="#/about">关于</a></li>
           </ul>
           <ul class="nav navbar-nav navbar-right">

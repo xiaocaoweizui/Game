@@ -8,6 +8,8 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
+    "@grapecity-software/spread-sheets-io": "^17.1.1",
+    "@grapecity-software/spread-sheets-vue": "^17.1.1",
     "axios": "^1.6.2",
     "chinese-workday": "^1.10.0",
     "core-js": "^3.8.3",

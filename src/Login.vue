@@ -7,9 +7,9 @@
           <br>
         </div>
         <div class="form-group">
-          <label for="inputUseName" class="col-sm-2 control-label">用户</label>
+          <label for="inputUserCode" class="col-sm-2 control-label">账户</label>
           <div class="col-sm-10">
-            <input type="text" class="form-control" id="inputUseName" placeholder="用户名称">
+            <input type="text" class="form-control" id="inputUserCode" placeholder="用户账户">
           </div>
         </div>
         <div class="form-group">
@@ -95,7 +95,7 @@ export default {
 
       axios
         .post("/person/login", {
-          name: $("#inputUseName").val(),
+          code: $("#inputUserCode").val(),
           password: $("#inputPassword").val(),
         })
         .then((res) => {
@@ -104,7 +104,7 @@ export default {
             window.location.href = "/";
 
           } else {
-            alert("用户名或密码错误");
+            alert("用户名或密码错误！");
           }
         });
     },

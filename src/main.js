@@ -1,20 +1,28 @@
 import { createApp } from 'vue'
 import App from './App.vue'
 import Login from './Login.vue'
+import Demo from './Demo.vue'
 import axios from "axios";
+import  {GcSpreadSheets,GcWorksheet,GcColumn}  from '@grapecity-software/spread-sheets-vue'
 
 // 设置axios的默认地址
 // axios.defaults.baseURL="http://localhost:8080"
 // 将axios挂载到vue的原型中,所有组件都可以直接使用
 
 // Vue.prototype.$http=axios;
+var path=window.location.pathname.toLocaleLowerCase();
 
-if(window.location.pathname.toLocaleLowerCase()=="/login"){
+if(path=="/login"){
     const LoginVue=createApp(Login);
     LoginVue.mount('#app');
-}else{
-    // let auth= localStorage.getItem("authorization");
-    // alert(auth)
+}else if(path=="/demo"){
+    const DemoVue=createApp(Demo);
+    //添加组件
+    DemoVue.component("gc-spread-sheets",GcSpreadSheets);
+    DemoVue.component("gc-worksheet",GcWorksheet);
+    DemoVue.component("gc-column",GcColumn);
+    DemoVue.mount('#app');
+} else{
     const Vue=createApp(App);
     Vue.mount('#app');
 }

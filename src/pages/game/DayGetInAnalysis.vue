@@ -104,6 +104,9 @@ export default {
             return null;
           }
           var target = _.findWhere(me.targets, { status: "进行中" });
+          if (target == undefined) {
+            target = me.targets[0];
+          }
           me.selectedTarget=target;
           var startDate=me.formatDate(target.start_time);
           var endDate=me.formatDate(target.end_time);
@@ -133,6 +136,7 @@ export default {
       me.search();
     },
     setData(data) {
+
       let xData = _.pluck(data, "record_time");
       xData = _.map(xData, function (item) {
         return dayjs(item).format("YYYY-MM-DD");
@@ -144,6 +148,7 @@ export default {
       let barData = [];
       let xBarData = [];
       let yBarData = [];
+
       _.each(data, function (item) {
         var weekItem = _.find(barData, function (x) {
           return x.week == item.week;
