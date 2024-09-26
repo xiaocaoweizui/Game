@@ -1,33 +1,41 @@
 <template>
-  <p>{{ test }}</p>
-  <HelloWorld msg="Welcome to Your Vue.js App" />
+  <hr>
+  <div class="container">
+    <div class="row">
+        <div class="input-group">
+          <input type="text" class="form-control" placeholder="Search for...">
+          <span class="input-group-btn">
+            <button class="btn btn-default" type="button">Go!</button>
+          </span>
+        </div>
+    </div>
+    <div>
+
+    </div>
+  </div>
 </template>
 
+<!--<script type="module">-->
+<!--import { pipeline,env }  from "https://cdn.jsdelivr.net/npm/@xenova/transformers@2.6.0"-->
+<!--</script>-->
 <script>
-import HelloWorld from "../components/HelloWorld.vue";
 import axios from "axios";
+
 
 export default {
   name: "test",
   data: function () {
     return {
-      test: "我的AI问答",
+      test: "做一个古诗词问答AI",
     };
   },
   mounted: function () {
-    var url = "http://api.tanshuapi.com/api/qa/v1/index?key=&keywords=说一个笑话";
-    axios
-      .get(url)
-      .then((res) => {
-        alert(res);
-        this.test = res;
-      })
-      .catch((err) => {
-        console.log("获取err", err);
-      });
+    debugger
+
+
   },
   components: {
-    HelloWorld,
+
   },
 };
 </script>

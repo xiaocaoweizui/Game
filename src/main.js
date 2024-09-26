@@ -27,6 +27,20 @@ if(path=="/login"){
     Vue.mount('#app');
 }
 
+axios.interceptors.response.use(
+    response =>{
+
+        return response;
+    }
+    ,error => {
+    //console.log(error);
+    if(error.response.status==401){
+        window.location.href="/login";
+    }else{
+        return Promise.reject(error);
+    }
+})
+
 axios.interceptors.request.use(function (config) {
     let isFromLogin=window.location.href.indexOf('/login')>-1;
     let auth = localStorage.getItem("authorization");

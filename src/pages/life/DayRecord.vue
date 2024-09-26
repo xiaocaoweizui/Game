@@ -121,6 +121,20 @@
               </div>
             </div>
             <div class="form-group">
+              <label for="user_selected" class="col-sm-2 control-label">目标：</label>
+              <div class="col-sm-10" >
+                <input
+                    type="text"
+                    class="form-control"
+                    id="title"
+                    placeholder="目标"
+                    readonly
+                    v-bind:value="selectedTarget.target"
+                />
+                <input type="hidden" id="target_id" v-bind:value="selectedTarget.id">
+              </div>
+            </div>
+            <div class="form-group">
               <label for="remark" class="col-sm-2 control-label">备注</label>
               <div class="col-sm-10">
                 <textarea class="form-control" rows="5" id="remark"></textarea>
@@ -270,7 +284,7 @@ export default {
       $(e.target).parent().siblings().removeClass("active");
       $(e.target).parent().addClass("active");
 
-      this.getPageData(selectPage);
+      this.search(null,null,selectPage);
     },
     getPageArr() {
       var ret = [];
@@ -280,7 +294,7 @@ export default {
       }
       return ret;
     },
-    initData(pageNum) {
+    initData() {
       var me=this;
       var startDate=null;
       var endDate=null;
@@ -305,16 +319,7 @@ export default {
           return me.search(startDate, endDate);
         })
     },
-    getPageData(pageNum) {
-      axios
-        .get(`/liferecord/queryAll?isDesc=1&page=${pageNum}&t=${Math.random()}`)
-        .then((res) => {
-          this.data = res.data.data;
-        })
-        .catch((err) => {
-          console.log("获取err", err);
-        });
-    },
+
     formatTime(date) {
       if(date==null){
         return "";
@@ -348,6 +353,7 @@ export default {
       let remark = $("#remark").val();
       let id = $("#id").val();
       let dayAmount = $("#day_amount").val() - 0;
+      let targetId = $("#target_id").val();
 
       let url = `/liferecord/insert`;
       if (id != "") {
@@ -361,7 +367,8 @@ export default {
         person_name: userName,
         remark: remark,
         record_time: getInDate,
-        day_amount: dayAmount
+        day_amount: dayAmount,
+        target_id:targetId
       };
       axios.post(url, data).then((res) => {
         if (res.data.msg == "success") {
@@ -408,10 +415,12 @@ export default {
         }
       });
     },
-    search(startDate, endDate) {
+    search(startDate, endDate,pageNum) {
       startDate = startDate || $("#inputStartDate").val();
       endDate = endDate || $("#inputEndDate").val();
-      let url = `/liferecord/search?isDesc=1&startDate=${startDate}&endDate=${endDate}&&page=1`;
+      pageNum=pageNum || 1;
+
+      let url = `/liferecord/search?isDesc=1&startDate=${startDate}&endDate=${endDate}&&page=${pageNum}&targetId=${this.selectedTarget.id}`;
 
       axios
         .get(

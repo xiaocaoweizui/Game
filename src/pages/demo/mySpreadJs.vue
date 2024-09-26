@@ -168,7 +168,7 @@ export default {
       sheet.setStyle(7, 1, style3);
 
 
-
+      sheet.rowFilter(new GC.Spread.Sheets.Filter.HideRowFilter(new GC.Spread.Sheets.Range(-1, 0, -1, 1)));
 
     },
     importExcel() {

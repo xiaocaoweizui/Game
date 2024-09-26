@@ -266,7 +266,7 @@ export default {
       $(e.target).parent().siblings().removeClass("active");
       $(e.target).parent().addClass("active");
 
-      this.getPageData(selectPage);
+      this.search(null,null,selectPage);
     },
     getPageArr() {
       var ret = [];
@@ -276,7 +276,7 @@ export default {
       }
       return ret;
     },
-    initData(pageNum) {
+    initData() {
       var me=this;
       axios.get(`/target/queryAll?t=${Math.random()}&type=娱乐`)
         .then((res) => {
@@ -299,19 +299,7 @@ export default {
           return me.search(startDate, endDate);
         });
     },
-    getPageData(pageNum) {
-      var startDate =$("#inputStartDate").val();
-      var endDate= $("#inputEndDate").val();
-      let url = `/record/search?isDesc=1&startDate=${startDate}&endDate=${endDate}&&page=${pageNum}`;
-      axios
-        .get(url)
-        .then((res) => {
-          this.data = res.data.data;
-        })
-        .catch((err) => {
-          console.log("获取err", err);
-        });
-    },
+
     formatTime(date) {
       if(date==null){
         return "";
@@ -422,10 +410,12 @@ export default {
         }
       });
     },
-    search(startDate, endDate) {
+    search(startDate, endDate,pageNum) {
       startDate = startDate || $("#inputStartDate").val();
       endDate = endDate || $("#inputEndDate").val();
-      let url = `/record/search?isDesc=1&startDate=${startDate}&endDate=${endDate}&&page=1`;
+      pageNum=pageNum || 1;
+
+      let url = `/record/search?isDesc=1&startDate=${startDate}&endDate=${endDate}&&page=${pageNum}&targetId=${this.selectedTarget.id}`;
 
       axios
         .get(

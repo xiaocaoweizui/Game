@@ -177,7 +177,7 @@
               <label for="type" class="col-sm-2 control-label">分类</label>
               <div class="col-sm-10">
                 <label class="radio-inline">
-                  <input type="radio" name="radio_type" id="radio_life" value="生活" />
+                  <input type="radio" name="radio_type" id="radio_life" checked value="生活" />
                   生活
                 </label>
                 <label class="radio-inline">
@@ -304,7 +304,6 @@ export default {
         remark: remark,
         start_time: startDate,
         end_time: endDate,
-        amount: amount,
         status: status,
         type: type,
         unit:unit
