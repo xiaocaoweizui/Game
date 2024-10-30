@@ -112,6 +112,20 @@
               </div>
             </div>
             <div class="form-group">
+              <label for="user_selected" class="col-sm-2 control-label">目标：</label>
+              <div class="col-sm-10" >
+                <input
+                    type="text"
+                    class="form-control"
+                    id="title"
+                    placeholder="目标"
+                    readonly
+                    v-bind:value="selectedTarget.target"
+                />
+                <input type="hidden" id="target_id" v-bind:value="selectedTarget.id">
+              </div>
+            </div>
+            <div class="form-group">
               <label for="remark" class="col-sm-2 control-label">备注</label>
               <div class="col-sm-10">
                 <textarea class="form-control" rows="3" id="remark"></textarea>
@@ -351,6 +365,7 @@ export default {
       let remark = $("#remark").val();
       let id = $("#id").val();
       let dayAmount = $("#day_coin").val() - 0;
+      let targetId = $("#target_id").val();
 
       let url = `/record/insert`;
       if (id != "") {
@@ -363,6 +378,7 @@ export default {
         remark: remark,
         record_time: getInDate,
         day_amount: dayAmount,
+        target_id: targetId,
         week: dayjs(getInDate).week(),
       };
       axios.post(url, data).then((res) => {

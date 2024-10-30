@@ -135,7 +135,7 @@ export default {
     search(startDate, endDate) {
       startDate = startDate || $("#inputStartDate").val();
       endDate = endDate || $("#inputEndDate").val();
-      let url = `/liferecord/search?startDate=${startDate}&endDate=${endDate}`;
+      let url = `/liferecord/search?startDate=${startDate}&endDate=${endDate}&targetId=${this.selectedTarget.id}`;
       axios.get(url).then((res) => {
         if (res.data.msg == "success" && res.data.data != undefined) {
           //设置图表的数据源
