@@ -5,16 +5,24 @@
 }
 
 #table_calender tr {
-    height: 140px;
-    line-height: 120px;
+
 }
 
 #table_calender td {
     width: 14%;
 }
+.table_calender_thead{
+    height: 40px;
+    line-height: 40px;
+
+}
+.table_calender_thead th{
+    text-align: center;
+}
 
 .table_calender_tr {
-
+    height: 140px;
+    line-height: 120px;
 }
 
 .input_todo {

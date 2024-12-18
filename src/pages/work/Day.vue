@@ -21,13 +21,15 @@
   <div>
     <table class="table table-bordered" id="table_calender">
       <thead>
-      <td>日</td>
-      <td>一</td>
-      <td>二</td>
-      <td>三</td>
-      <td>四</td>
-      <td>五</td>
-      <td>六</td>
+        <tr class="table_calender_thead">
+          <th>日</th>
+          <th>一</th>
+          <th>二</th>
+          <th>三</th>
+          <th>四</th>
+          <th>五</th>
+          <th>六</th>
+        </tr>
       </thead>
       <tbody>
       <tr v-for="(item, index) in days" class="table_calender_tr">

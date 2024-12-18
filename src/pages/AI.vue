@@ -3,12 +3,13 @@
   <div class="container">
     <div class="row">
         <div class="input-group">
-          <input type="text" class="form-control" placeholder="Search for...">
+          <input type="text" class="form-control" id="inputSearchKeys" placeholder="Search for...">
           <span class="input-group-btn">
-            <button class="btn btn-default" type="button">Go!</button>
+            <button class="btn btn-default" type="button" id="btnSearch" @click="search()">Go!</button>
           </span>
         </div>
     </div>
+    <div class="div_search_result"><p>搜索结果 <b>{{ totalCount }}</b> 条</p></div>
     <div class="div_content "  >
       <div v-for="data in datas" class="div_poem">
         <div class="div_poem_title">{{ data.title }}</div>
@@ -29,13 +30,37 @@
         </div>
       </div>
     </div>
+
+    <div class="page_div ">
+      <ul class="pagination" style="margin: 0px" id="pageNum">
+        <li><span>&laquo;</span></li>
+        <li v-for="num in getPageArr()" :class="{ active: num == 1 }">
+          <a href="javascript:void(0)" @click="changePage($event)">{{ num }}</a>
+        </li>
+        <li><span>&raquo;</span></li>
+      </ul>
+    </div>
   </div>
 </template>
 <style>
+.div_search_result{
+  margin-top: 10px;
+  margin-right: -15px;
+  margin-left: -15px;
+  text-align: right;
+}
+.div_search_result b{
+  font-style: italic;
+  text-decoration: underline;
+}
+.page_div{
+  margin-top: 10px;
+  margin-right: -15px;
+  margin-left: -15px;
+}
 .div_content{
   margin-right: -15px;
   margin-left: -15px;
-  height: 500px;
   //overflow-y: scroll;
   //overflow-x:hidden;
 }
@@ -43,7 +68,7 @@
   margin: 10px 0px;
   padding: 10px;
   text-align: center;
-  display: inline-block;
+  display: inline;
   border: solid 1px #eee;
 
 }
@@ -72,10 +97,19 @@
 <!--</script>-->
 <script>
 import axios from "axios";
+import  _ from "underscore";
+//import jieba  from "nodejs-jieba";
 
 /**
  * 采用jieba分词，拆分：关键词、作者、朝代、体裁, 响应式滚动加载数据
- * 数据来源：https://github.com/chinese-poetry/chinese-poetry
+ *  npm安装： npm install nodejs-jieba --registry=https://registry.npmmirror.com --nodejs-jieba_binary_host_mirror=https://registry.npmmirror.com/-/binary/nodejieba/ --MSVS_VERSION=2019
+ * 数据来源（全繁体）：https://github.com/chinese-poetry/chinese-poetry
+ * 数据源地址：https://github.com/todototry/AncientChinesePoemsDB
+ * 过程问题：
+ * 1、   npm install --save-dev @babel/plugin-transform-private-methods
+ * 2、  npm install --save-dev node-polyfill-webpack-plugin，同时修改webpack.config.js，添加plugins: [new NodePolyfillPlugin()]
+ * 3、    npm install --save-dev path-browserify
+ *
  */
 
 export default {
@@ -83,6 +117,7 @@ export default {
   data: function () {
     return {
       test: "做一个古诗词问答AI",
+      totalCount:2,
       datas:[
         {
           "title":"静夜思",
@@ -113,9 +148,69 @@ export default {
 
   },
   methods: {
-    getContentHeight(){
-      return document.clientHeight - 150;
+    getPageArr(){
+
+      var ret = [];
+      //默认15页面
+      for (var i = 0; i < this.totalCount / 15; i++) {
+        ret.push(i + 1);
+      }
+      return ret;
+    },
+    changePage(e) {
+      var selectPage = $(e.target).text() - 0;
+      //选中状态的变更
+      $(e.target).parent().siblings().removeClass("active");
+      $(e.target).parent().addClass("active");
+
+      this.search(selectPage);
+    },
+    getDynasty:function (dynasty){
+      switch (dynasty)
+      {
+        case "T":
+          return "唐";
+        case "S":
+          return "宋";
+        case "Y":
+          return "元";
+        case "M":
+          return "明";
+        case "Q":
+          return "清";
+        default:
+          return "唐";
+      }
+    },
+    search(pageNum){
+      pageNum=pageNum??1;
+      let me=this;
+      let keys=$("#inputSearchKeys").val();
+
+      //采用分词等逻辑处理
+      let url=`/poems/query`;
+      let data={"keys":keys,"pageNum":pageNum};
+
+      axios.post(url,data)
+          .then((res) => {
+              var data=res.data.data;
+
+            me.datas= _.map(data,function(item){
+                var contents=item.content.split("|");
+
+                return {
+                  "title":item.title,
+                  "contents":contents,
+                  "author":item.author,
+                  "dynasty":me.getDynasty(item.dynasty),
+                  "remark":""
+                }
+
+              });
+          })
+
     }
+
   }
 };
 </script>
