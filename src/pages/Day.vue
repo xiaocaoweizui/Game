@@ -8,8 +8,9 @@
         </li>
         <li role="presentation"><a href="javascript:void(0)" @click="changeTab('work',$event)">工作</a></li>
         <li role="presentation"><a href="javascript:void(0)" @click="changeTab('game',$event)">娱乐</a></li>
+        <li role="presentation"><a href="javascript:void(0)" @click="changeTab('schedule',$event)">日程</a></li>
       </ul>
-   
+
     </div>
     <div class="col-md-11 container" style="border-left:solid 1px #eee">
       <component :is="currentView" />
@@ -20,13 +21,15 @@
 <script>
 import gameDayGetIn from "./game/DayGetIn.vue";
 import lifeDayGetIn from "./life/DayRecord.vue";
-import work from "./work/Day.vue";
+import workDayGetIn from "./work/DayRecord.vue";
+import schedule from "./work/Day.vue";
 import NotFound from "./NotFound.vue";
 
 const routes = {
   'life': lifeDayGetIn,
   'game': gameDayGetIn,
-  'work':work
+  'schedule':schedule,
+  'work':workDayGetIn
 };
 
 export default {
@@ -36,7 +39,7 @@ export default {
     }
   },
   mounted(){
-    
+
   },
   methods: {
     changeTab(tabName,e) {
