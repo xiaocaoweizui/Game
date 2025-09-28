@@ -22,7 +22,7 @@
 import gameDayGetIn from "./game/DayGetIn.vue";
 import lifeDayGetIn from "./life/DayRecord.vue";
 import workDayGetIn from "./work/DayRecord.vue";
-import schedule from "./work/Day.vue";
+import schedule from "./schedule/Day.vue";
 import NotFound from "./NotFound.vue";
 
 const routes = {
