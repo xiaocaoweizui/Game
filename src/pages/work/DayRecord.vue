@@ -6,7 +6,7 @@
       <div class="col-sm-3">
         <div class="input-group">
         <select class="form-control" id="select_target" @change="changeTarget($event)">
-          <option v-for="target in targets" :id="target.id" :selected="target.status=='进行中'">{{ target.target }}</option>
+          <option v-for="target in targets" :id="target.id" :selected="target.status==='进行中'">{{ target.target }}</option>
         </select>
         <span class="input-group-addon"><span class="label" :class="getStatusStyle(selectedTarget.status)">{{ selectedTarget.status}}</span></span>
         </div>
@@ -301,14 +301,14 @@ export default {
       axios.get(`/target/queryAll?t=${Math.random()}&type=工作`)
         .then((res) => {
           me.targets = res.data.data;
-          if (me.targets.length == 0) {
+          if (me.targets.length === 0) {
             return null;
           }
-          var target = _.findWhere(me.targets, { status: "进行中" });
-          me.selectedTarget=target;
+          var targetIndex = _.findLastIndex(me.targets, { status: "进行中" });
+          me.selectedTarget=me.targets[targetIndex];
 
-          startDate=me.formatDate(target.start_time);
-          endDate=me.formatDate(target.end_time);
+          startDate=me.formatDate(me.selectedTarget.start_time);
+          endDate=me.formatDate(me.selectedTarget.end_time);
 
           $("#inputStartDate").val(startDate);
           $("#inputEndDate").val(endDate);
